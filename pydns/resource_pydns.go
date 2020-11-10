@@ -98,7 +98,7 @@ func resourcePyDNSRecordCreate(d *schema.ResourceData, m interface{}) error {
 	}
 
 
-	_, err = gopydns.RunPyDnsCommandCreate(record_name, client.username, client.password, client.server, zone_name, ipv4address, "./crate-dns.py")
+	_, err = gopydns.RunPyDnsCommandCreate(record_name, client.username, client.password, client.server, zone_name, ipv4address, client.dnspy)
 
 	if err != nil {
 		//something bad happened
@@ -141,7 +141,7 @@ func resourcePyDNSRecordDelete(d *schema.ResourceData, m interface{}) error {
         }
 
 
-        _, err = gopydns.RunPyDnsCommandRemove(record_name, client.username, client.password, client.server, zone_name, ipv4address, "./crate-dns.py")
+        _, err = gopydns.RunPyDnsCommandRemove(record_name, client.username, client.password, client.server, zone_name, ipv4address, client.dnspy)
 
         if err != nil {
                 //something bad happened
