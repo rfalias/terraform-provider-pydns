@@ -97,6 +97,7 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 		name:		name,
 		zone:           zone,
                 ip:             ip,
+                dnspy:          dnspy,
 		lockfile:       lockfile,
 	}
 
@@ -110,5 +111,6 @@ type DNSClient struct {
 	name		string
 	zone            string
         ip              string
+        dnspy           string
 	lockfile	string
 }

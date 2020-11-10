@@ -5,9 +5,6 @@ import (
 
 	"github.com/rfalias/gopydns"
 
-	"errors"
-	"strings"
-
 	"os"
 	"time"
 	"math/rand"
@@ -78,7 +75,7 @@ func resourcePyDNSRecord() *schema.Resource {
 	}
 }
 
-func resourceWinDNSRecordCreate(d *schema.ResourceData, m interface{}) error {
+func resourcePyDNSRecordCreate(d *schema.ResourceData, m interface{}) error {
 	//convert the interface so we can use the variables like username, etc
 	client := m.(*DNSClient)
 
@@ -86,12 +83,12 @@ func resourceWinDNSRecordCreate(d *schema.ResourceData, m interface{}) error {
 	record_type := d.Get("record_type").(string)
 	record_name := d.Get("record_name").(string)
 	ipv4address := d.Get("ipv4address").(string)
-	hostnamealias := d.Get("hostnamealias").(string)
-	ptrdomainname := d.Get("ptrdomainname").(string)
+	//hostnamealias := d.Get("hostnamealias").(string)
+	//ptrdomainname := d.Get("ptrdomainname").(string)
 
 	var id string = zone_name + "_" + record_name + "_" + record_type
 
-	var psCommand string
+	//var psCommand string
 
 	waitForLock(client)
 	
@@ -117,10 +114,10 @@ func resourceWinDNSRecordCreate(d *schema.ResourceData, m interface{}) error {
 }
 
 
-func resourceWinDNSRecordRead(d *schema.ResourceData, m interface{}) error {
+func resourcePyDNSRecordRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func resourceWinDNSRecordDelete(d *schema.ResourceData, m interface{}) error {
+func resourcePyDNSRecordDelete(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
