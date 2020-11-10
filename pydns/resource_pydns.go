@@ -119,5 +119,40 @@ func resourcePyDNSRecordRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func resourcePyDNSRecordDelete(d *schema.ResourceData, m interface{}) error {
-	return nil
+	  //convert the interface so we can use the variables like username, etc
+        client := m.(*DNSClient)
+
+        zone_name := d.Get("zone_name").(string)
+        record_type := d.Get("record_type").(string)
+        record_name := d.Get("record_name").(string)
+        ipv4address := d.Get("ipv4address").(string)
+        //hostnamealias := d.Get("hostnamealias").(string)
+        //ptrdomainname := d.Get("ptrdomainname").(string)
+
+        var id string = zone_name + "_" + record_name + "_" + record_type
+
+        //var psCommand string
+
+        waitForLock(client)
+
+        file, err := os.Create(client.lockfile)
+        if err != nil {
+                return err
+        }
+
+
+        _, err = gopydns.RunPyDnsCommandRemove(record_name, client.username, client.password, client.server, zone_name, ipv4address, "./crate-dns.py")
+
+        if err != nil {
+                //something bad happened
+                return err
+        }
+
+        d.SetId(id)
+
+        file.Close()
+        os.Remove(client.lockfile)
+
+        return nil
+
 }
